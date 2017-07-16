@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhang.dao.BookDao">
+	<resultMap type="com.zhang.entity.Book" id="BookResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="bookName" column="bookName" jdbcType="VARCHAR" />
+		<result property="pressName" column="pressName" jdbcType="VARCHAR" />
+		<result property="autor" column="autor" jdbcType="VARCHAR" />
+		<result property="amount" column="amount" jdbcType="INTEGER" />
+		<result property="bookType" column="bookType" jdbcType="INTEGER" />
+		<result property="floor" column="floor" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="bookrack" column="bookrack" jdbcType="VARCHAR" />
+		<result property="remark" column="remark" jdbcType="LONGVARCHAR" />
+		<result property="row" column="row" jdbcType="VARCHAR" />
+		<result property="lattice" column="lattice" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="BASE_SQL_ID">
+		id,name,pass,grade,email,age,phone,sex,img
+	</sql>
+
+	<select id="getAllBook" parameterType="Map" resultMap="BookResult">
+		select * from t_book where 1=1
+		<if test="bookName != null and bookName != '' ">
+			and bookName like CONCAT(CONCAT('%', #{bookName}), '%')
+		</if>
+		<if test="pressName != null and pressName != '' ">
+			and pressName like CONCAT(CONCAT('%', #{pressName}), '%')
+		</if>
+		<if test="autor != null and autor != '' ">
+			and autor like CONCAT(CONCAT('%', #{autor}), '%')
+		</if>
+		<if test="start!=null and size!=null">  <!-- start=起始页 size=叶容量 -->
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<select id="countNum" parameterType="Map" resultType="Integer">
+		select count(*) from t_book where 1=1
+		<if test="bookName != null and bookName != '' ">
+			and bookName like CONCAT(CONCAT('%', #{bookName}), '%')
+		</if>
+		<if test="pressName != null and pressName != '' ">
+			and pressName like CONCAT(CONCAT('%', #{pressName}), '%')
+		</if>
+		<if test="autor != null and autor != '' ">
+			and autor like CONCAT(CONCAT('%', #{autor}), '%')
+		</if>
+	</select>
+
+	<select id="searchUserByName" parameterType="String" resultMap="BookResult">
+		select * from t_book where bookName like CONCAT(CONCAT('%',
+		#{bookName}), '%')
+	</select>
+
+	<insert id="addBook" parameterType="Book">
+		insert into t_book
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="bookName != null">
+				bookName,
+			</if>
+			<if test="pressName != null">
+				pressName,
+			</if>
+			<if test="autor != null">
+				autor,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="bookType != null">
+				bookType,
+			</if>
+			<if test="floor != null">
+				floor,
+			</if>
+			<if test="area != null">
+				area,
+			</if>
+			<if test="bookrack != null">
+				bookrack,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="row != null">
+				row,
+			</if>
+			<if test="lattice != null">
+				lattice,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="bookName != null">
+				#{bookName,jdbcType=VARCHAR},
+			</if>
+			<if test="pressName != null">
+				#{pressName,jdbcType=VARCHAR},
+			</if>
+			<if test="autor != null">
+				#{autor,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=INTEGER},
+			</if>
+			<if test="bookType != null">
+				#{bookType,jdbcType=INTEGER},
+			</if>
+			<if test="floor != null">
+				#{floor,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				#{area,jdbcType=VARCHAR},
+			</if>
+			<if test="bookrack != null">
+				#{bookrack,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark, jdbcType=LONGVARCHAR},
+			</if>
+			<if test="row != null">
+				#{row,jdbcType=VARCHAR},
+			</if>
+			<if test="lattice != null">
+				#{lattice, jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="searchBookByID" parameterType="int" resultMap="BookResult">
+		select
+		* from t_book where id=#{id}
+	</select>
+
+	<update id="updateBook" parameterType="com.zhang.entity.Book">
+		update t_book
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="bookName != null">
+				bookName = #{bookName,jdbcType=VARCHAR},
+			</if>
+			<if test="pressName != null">
+				pressName = #{pressName,jdbcType=VARCHAR},
+			</if>
+			<if test="autor != null">
+				autor = #{autor,jdbcType=VARCHAR},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=INTEGER},
+			</if>
+			<if test="bookType != null">
+				bookType = #{bookType,jdbcType=INTEGER},
+			</if>
+			<if test="area != null">
+				area = #{area,jdbcType=VARCHAR},
+			</if>
+			<if test="floor != null">
+				floor = #{floor,jdbcType=VARCHAR},
+			</if>
+			<if test="bookrack != null">
+				bookrack = #{bookrack,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="row != null">
+				row = #{row,jdbcType=VARCHAR},
+			</if>
+			<if test="lattice != null">
+				lattice = #{lattice,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+
+</mapper> 

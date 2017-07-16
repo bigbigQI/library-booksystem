@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhang.dao.RecordDao">
+	<resultMap type="com.zhang.entity.Record" id="RecordResult">
+		<result property="id" column="id" jdbcType="INTEGER" />
+		<result property="userid" column="userid" jdbcType="INTEGER" />
+		<result property="bookid" column="bookid" jdbcType="INTEGER" />
+		<result property="begigtime" column="begigtime" jdbcType="TIMESTAMP" />
+		<result property="lasttime" column="lasttime" jdbcType="TIMESTAMP" />
+		<result property="status" column="status" jdbcType="INTEGER" />
+		<result property="bookName" column="bookName" jdbcType="VARCHAR" />
+		<result property="pressName" column="pressName" jdbcType="VARCHAR" />
+		<result property="autor" column="autor" jdbcType="VARCHAR" />
+		<result property="bookType" column="bookType" jdbcType="INTEGER" />
+		<result property="floor" column="floor" jdbcType="VARCHAR" />
+		<result property="area" column="area" jdbcType="VARCHAR" />
+		<result property="bookrack" column="bookrack" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getAllRecord" parameterType="Map" resultMap="RecordResult">
+		select * from t_record record where 1=1
+		<if test="status != null and status != '' ">
+			and record.status = #{status}
+		</if>
+		<if test="userid != null and userid !='' ">
+			and record.userid = #{userid}
+		</if>
+		<if test="start!=null and size!=null">  <!-- start=起始页 size=叶容量 -->
+			limit #{start},#{size}
+		</if>
+	</select>
+
+	<select id="countNum" parameterType="Map" resultType="Integer">
+		select count(*) from t_record where 1=1
+		<if test="status != null and status != '' ">
+			and status = #{status}
+		</if>
+		<if test="userid != null and userid != '' ">
+			and userid = #{userid}
+		</if>
+	</select>
+
+	<insert id="addRecord" parameterType="Record">
+		insert into t_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="bookid != null">
+				bookid,
+			</if>
+			<if test="begigtime != null">
+				begigtime,
+			</if>
+			<if test="lasttime != null">
+				lasttime,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="bookName != null">
+				bookName,
+			</if>
+			<if test="pressName != null">
+				pressName,
+			</if>
+			<if test="autor != null">
+				autor,
+			</if>
+			<if test="bookType != null">
+				bookType,
+			</if>
+			<if test="floor != null">
+				floor,
+			</if>
+			<if test="area != null">
+				area,
+			</if>
+			<if test="bookrack != null">
+				bookrack,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="bookid != null">
+				#{bookid,jdbcType=INTEGER},
+			</if>
+			<if test="begigtime != null">
+				#{begigtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lasttime != null">
+				#{lasttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="bookName != null">
+				#{bookName,jdbcType=VARCHAR},
+			</if>
+			<if test="pressName != null">
+				#{pressName,jdbcType=VARCHAR},
+			</if>
+			<if test="autor != null">
+				#{autor,jdbcType=VARCHAR},
+			</if>
+			<if test="bookType != null">
+				#{bookType,jdbcType=INTEGER},
+			</if>
+			<if test="floor != null">
+				#{floor,jdbcType=VARCHAR},
+			</if>
+			<if test="area != null">
+				#{area,jdbcType=VARCHAR},
+			</if>
+			<if test="bookrack != null">
+				#{bookrack,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="serchRecordByID" parameterType="int" resultMap="RecordResult">
+		select
+		* from t_record where id=#{id}
+	</select>
+
+	<update id="updateRecord" parameterType="com.zhang.entity.Record">
+		update t_record
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=INTEGER},
+			</if>
+			<if test="bookid != null">
+				bookid = #{bookid,jdbcType=INTEGER},
+			</if>
+			<if test="begigtime != null">
+				begigtime = #{begigtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lasttime != null">
+				lasttime = #{lasttime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="bookName != null">
+				bookName = #{bookName,jdbcType=VARCHAR},
+			</if>
+			<if test="pressName != null">
+				pressName = #{pressName,jdbcType=VARCHAR},
+			</if>
+			<if test="autor != null">
+				autor = #{autor,jdbcType=VARCHAR},
+			</if>
+			<if test="floor != null">
+				floor = #{floor,jdbcType=VARCHAR},
+			</if>
+			<if test="pressName != null">
+				pressName = #{pressName,jdbcType=VARCHAR},
+			</if>
+			<if test="bookrack != null">
+				bookrack = #{bookrack,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper> 
