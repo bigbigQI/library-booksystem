@@ -10,3 +10,4 @@
 ######2.将book.sql文件导入到mysql中，导入语句为source 路径
 ######3.修改java/resources路径下的jdbc.properties文件，将数据库的账号和密码修改为自己的密码
 ######4.在浏览器中输入lhost:8080/BookSystem/
+![Image text](https://github.com/bigbigQI/library-booksystem/blob/master/1.jpg)
